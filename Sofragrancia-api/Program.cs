@@ -22,6 +22,17 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // Repositories
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IVendedorRepository, VendedorRepository>();
@@ -41,6 +52,8 @@ builder.Services.AddScoped<IService<ItemPedidoDto, ItemPedidoCreateDto>, ItemPed
 builder.Services.AddScoped<IService<PedidoDeCompraDto, PedidoDeCompraCreateDto>, PedidoDeCompraService>();
 
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
