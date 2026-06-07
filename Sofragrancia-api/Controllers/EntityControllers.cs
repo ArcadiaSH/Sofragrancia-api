@@ -9,4 +9,4 @@ public class FornecedoresController(IService<FornecedorDto, FornecedorCreateDto>
 public class ProdutosController(IService<ProdutoDto, ProdutoCreateDto> s) : BaseController<ProdutoDto, ProdutoCreateDto>(s) { }
 public class PedidosController(IService<PedidoDto, PedidoCreateDto> s) : BaseController<PedidoDto, PedidoCreateDto>(s) { }
 public class ItensPedidoController(IService<ItemPedidoDto, ItemPedidoCreateDto> s) : BaseController<ItemPedidoDto, ItemPedidoCreateDto>(s) { }
-public class PedidosDeCompraController(IService<PedidoDeCompraDto, PedidoDeCompraCreateDto> s) : BaseController<PedidoDeCompraDto, PedidoDeCompraCreateDto>(s) { }
+public class ReposicoesController(IService<ReposicaoDto, ReposicaoCreateDto> s) : BaseController<ReposicaoDto, ReposicaoCreateDto>(s) { }

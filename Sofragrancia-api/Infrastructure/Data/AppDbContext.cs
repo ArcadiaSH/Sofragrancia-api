@@ -11,7 +11,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Produto> Produtos => Set<Produto>();
     public DbSet<Pedido> Pedidos => Set<Pedido>();
     public DbSet<ItemPedido> ItensPedido => Set<ItemPedido>();
-    public DbSet<PedidoDeCompra> PedidosDeCompra => Set<PedidoDeCompra>();
+    public DbSet<Reposicao> Reposicoes => Set<Reposicao>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -55,6 +55,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.ToTable("Fornecedor");
             e.HasKey(x => x.Id);
             e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.TxCod).HasColumnName("tx_cod").HasMaxLength(255);
             e.Property(x => x.TxRazaosocial).HasColumnName("tx_razaosocial").HasMaxLength(255);
             e.Property(x => x.TxNomefantasia).HasColumnName("tx_nomefantasia").HasMaxLength(255);
             e.Property(x => x.TxCnpj).HasColumnName("tx_cnpj").HasMaxLength(255);
@@ -123,9 +124,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasOne(x => x.Produto).WithMany(p => p.ItensPedido).HasForeignKey(x => x.ProdutoId);
         });
 
-        modelBuilder.Entity<PedidoDeCompra>(e =>
+        modelBuilder.Entity<Reposicao>(e =>
         {
-            e.ToTable("Pedido de Compra");
+            e.ToTable("Reposicao");
             e.HasKey(x => x.Id);
             e.Property(x => x.Id).HasColumnName("id");
             e.Property(x => x.ProdutoId).HasColumnName("Produto_id");
@@ -137,8 +138,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
             e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
             e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
-            e.HasOne(x => x.Produto).WithMany(p => p.PedidosDeCompra).HasForeignKey(x => x.ProdutoId);
-            e.HasOne(x => x.Fornecedor).WithMany(f => f.PedidosDeCompra).HasForeignKey(x => x.FornecedorId);
+            e.HasOne(x => x.Produto).WithMany(p => p.Reposicoes).HasForeignKey(x => x.ProdutoId);
+            e.HasOne(x => x.Fornecedor).WithMany(f => f.Reposicoes).HasForeignKey(x => x.FornecedorId);
         });
     }
 }

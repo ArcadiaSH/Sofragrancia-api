@@ -10,5 +10,5 @@ public class Produto : BaseEntity
     public int NrEstoqueminimo { get; set; }
 
     public ICollection<ItemPedido> ItensPedido { get; set; } = new List<ItemPedido>();
-    public ICollection<PedidoDeCompra> PedidosDeCompra { get; set; } = new List<PedidoDeCompra>();
+    public ICollection<Reposicao> Reposicoes { get; set; } = new List<Reposicao>();
 }

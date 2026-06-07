@@ -40,7 +40,7 @@ builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<IItemPedidoRepository, ItemPedidoRepository>();
-builder.Services.AddScoped<IPedidoDeCompraRepository, PedidoDeCompraRepository>();
+builder.Services.AddScoped<IReposicaoRepository, ReposicaoRepository>();
 
 // Services
 builder.Services.AddScoped<IService<ClienteDto, ClienteCreateDto>, ClienteService>();
@@ -49,7 +49,7 @@ builder.Services.AddScoped<IService<FornecedorDto, FornecedorCreateDto>, Fornece
 builder.Services.AddScoped<IService<ProdutoDto, ProdutoCreateDto>, ProdutoService>();
 builder.Services.AddScoped<IService<PedidoDto, PedidoCreateDto>, PedidoService>();
 builder.Services.AddScoped<IService<ItemPedidoDto, ItemPedidoCreateDto>, ItemPedidoService>();
-builder.Services.AddScoped<IService<PedidoDeCompraDto, PedidoDeCompraCreateDto>, PedidoDeCompraService>();
+builder.Services.AddScoped<IService<ReposicaoDto, ReposicaoCreateDto>, ReposicaoService>();
 
 var app = builder.Build();
 

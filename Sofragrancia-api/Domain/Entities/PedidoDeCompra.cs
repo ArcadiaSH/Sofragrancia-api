@@ -1,6 +1,6 @@
 namespace Sofragrancia_api.Domain.Entities;
 
-public class PedidoDeCompra : BaseEntity
+public class Reposicao : BaseEntity
 {
     public long ProdutoId { get; set; }
     public long FornecedorId { get; set; }

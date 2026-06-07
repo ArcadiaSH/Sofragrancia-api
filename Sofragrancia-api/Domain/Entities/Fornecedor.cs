@@ -2,6 +2,7 @@ namespace Sofragrancia_api.Domain.Entities;
 
 public class Fornecedor : BaseEntity
 {
+    public string TxCod { get; set; } = string.Empty;
     public string TxRazaosocial { get; set; } = string.Empty;
     public string TxNomefantasia { get; set; } = string.Empty;
     public string TxCnpj { get; set; } = string.Empty;
@@ -11,5 +12,5 @@ public class Fornecedor : BaseEntity
     public string TxCidade { get; set; } = string.Empty;
     public string TxEstado { get; set; } = string.Empty;
 
-    public ICollection<PedidoDeCompra> PedidosDeCompra { get; set; } = new List<PedidoDeCompra>();
+    public ICollection<Reposicao> Reposicoes { get; set; } = new List<Reposicao>();
 }

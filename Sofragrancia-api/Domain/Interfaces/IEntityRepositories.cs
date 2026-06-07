@@ -6,4 +6,4 @@ public interface IFornecedorRepository : IRepository<Fornecedor> { }
 public interface IProdutoRepository : IRepository<Produto> { }
 public interface IPedidoRepository : IRepository<Pedido> { }
 public interface IItemPedidoRepository : IRepository<ItemPedido> { }
-public interface IPedidoDeCompraRepository : IRepository<PedidoDeCompra> { }
+public interface IReposicaoRepository : IRepository<Reposicao> { }

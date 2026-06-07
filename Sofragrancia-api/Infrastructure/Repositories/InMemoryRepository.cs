@@ -48,4 +48,4 @@ public class FornecedorRepository(AppDbContext ctx) : EfRepository<Fornecedor>(c
 public class ProdutoRepository(AppDbContext ctx) : EfRepository<Produto>(ctx), IProdutoRepository { }
 public class PedidoRepository(AppDbContext ctx) : EfRepository<Pedido>(ctx), IPedidoRepository { }
 public class ItemPedidoRepository(AppDbContext ctx) : EfRepository<ItemPedido>(ctx), IItemPedidoRepository { }
-public class PedidoDeCompraRepository(AppDbContext ctx) : EfRepository<PedidoDeCompra>(ctx), IPedidoDeCompraRepository { }
+public class ReposicaoRepository(AppDbContext ctx) : EfRepository<Reposicao>(ctx), IReposicaoRepository { }
