@@ -17,6 +17,8 @@ public class EfRepository<T>(AppDbContext context) : IRepository<T> where T : Ba
 
     public async Task<T> AddAsync(T entity)
     {
+        if (entity.Id == 0)
+            entity.Id = Random.Shared.NextInt64(1, long.MaxValue);
         entity.DtCreatedate = DateTime.UtcNow;
         entity.DtUpdatedate = DateTime.UtcNow;
         _dbSet.Add(entity);
