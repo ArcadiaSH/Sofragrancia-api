@@ -30,9 +30,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.TxEndereco).HasColumnName("tx_endereco").HasMaxLength(255);
             e.Property(x => x.TxCidade).HasColumnName("tx_cidade").HasMaxLength(255);
             e.Property(x => x.TxEstado).HasColumnName("tx_estado").HasMaxLength(2);
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("isenable");
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("isenable").IsRequired(false);
         });
 
         modelBuilder.Entity<Vendedor>(e =>
@@ -44,10 +44,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.TxCpf).HasColumnName("tx_cpf").HasMaxLength(255);
             e.Property(x => x.TxTelefone).HasColumnName("tx_telefone").HasMaxLength(255);
             e.Property(x => x.TxEmail).HasColumnName("tx_email").HasMaxLength(255);
-            e.Property(x => x.DtAdmissao).HasColumnName("dt_admissao");
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
+            e.Property(x => x.DtAdmissao).HasColumnName("dt_admissao").IsRequired(false);
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
         });
 
         modelBuilder.Entity<Fornecedor>(e =>
@@ -64,9 +64,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.TxEndereco).HasColumnName("tx_endereco").HasMaxLength(255);
             e.Property(x => x.TxCidade).HasColumnName("tx_cidade").HasMaxLength(255);
             e.Property(x => x.TxEstado).HasColumnName("tx_estado").HasMaxLength(255);
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
         });
 
         modelBuilder.Entity<Produto>(e =>
@@ -80,9 +80,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.NrPrecovenda).HasColumnName("nr_precovenda").HasColumnType("decimal(12,2)");
             e.Property(x => x.NrEstoqueatual).HasColumnName("nr_estoqueatual");
             e.Property(x => x.NrEstoqueminimo).HasColumnName("nr_estoqueminimo");
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
         });
 
         modelBuilder.Entity<Pedido>(e =>
@@ -97,16 +97,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.NrValorbruto).HasColumnName("nr_valorbruto").HasColumnType("decimal(12,2)");
             e.Property(x => x.NrValordesconto).HasColumnName("nr_valordesconto").HasColumnType("decimal(12,2)");
             e.Property(x => x.NrValorliquido).HasColumnName("nr_valorliquido").HasColumnType("decimal(12,2)");
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
             e.HasOne(x => x.Cliente).WithMany(c => c.Pedidos).HasForeignKey(x => x.ClienteId);
             e.HasOne(x => x.Vendedor).WithMany(v => v.Pedidos).HasForeignKey(x => x.VendedorId);
         });
 
         modelBuilder.Entity<ItemPedido>(e =>
         {
-            e.ToTable("Item Pedido");
+            e.ToTable("ItemPedido");
             e.HasKey(x => x.Id);
             e.Property(x => x.Id).HasColumnName("id");
             e.Property(x => x.PedidoId).HasColumnName("Pedido_id");
@@ -117,9 +117,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.NrPrecounitario).HasColumnName("nr_precounitario").HasColumnType("decimal(12,2)");
             e.Property(x => x.NrDescontounitario).HasColumnName("nr_descontounitario").HasColumnType("decimal(12,2)");
             e.Property(x => x.NrSubtotal).HasColumnName("nr_subtotal").HasColumnType("decimal(12,2)");
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
             e.HasOne(x => x.Pedido).WithMany(p => p.ItensPedido).HasForeignKey(x => x.PedidoId);
             e.HasOne(x => x.Produto).WithMany(p => p.ItensPedido).HasForeignKey(x => x.ProdutoId);
         });
@@ -132,12 +132,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.ProdutoId).HasColumnName("Produto_id");
             e.Property(x => x.FornecedorId).HasColumnName("Fornecedor_id");
             e.Property(x => x.NrQuantidade).HasColumnName("nr_quantidade");
-            e.Property(x => x.NrPrecounitario).HasColumnName("nr_precounitario").HasMaxLength(255);
+            e.Property(x => x.NrPrecounitario).HasColumnName("nr_precounitario").HasMaxLength(255).IsRequired(false);
             e.Property(x => x.NrDescontounitario).HasColumnName("nr_descontounitario");
             e.Property(x => x.Subtotal).HasColumnName("subtotal");
-            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate");
-            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate");
-            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable");
+            e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
+            e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
+            e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
             e.HasOne(x => x.Produto).WithMany(p => p.Reposicoes).HasForeignKey(x => x.ProdutoId);
             e.HasOne(x => x.Fornecedor).WithMany(f => f.Reposicoes).HasForeignKey(x => x.FornecedorId);
         });

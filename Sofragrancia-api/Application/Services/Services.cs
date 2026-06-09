@@ -38,19 +38,19 @@ public class ClienteService(IClienteRepository repo) : IService<ClienteDto, Clie
 public class VendedorService(IVendedorRepository repo) : IService<VendedorDto, VendedorCreateDto>
 {
     public async Task<IEnumerable<VendedorDto>> GetAllAsync() =>
-        (await repo.GetAllAsync()).Select(v => new VendedorDto(v.Id, v.TxNome, v.TxCpf, v.TxTelefone, v.TxEmail, v.DtAdmissao, v.FlIsenable));
+        (await repo.GetAllAsync()).Select(v => new VendedorDto(v.Id, v.TxNome, v.TxCpf, v.TxTelefone, v.TxEmail, v.DtAdmissao ?? DateTime.MinValue, v.FlIsenable));
 
     public async Task<VendedorDto?> GetByIdAsync(long id)
     {
         var v = await repo.GetByIdAsync(id);
-        return v is null ? null : new VendedorDto(v.Id, v.TxNome, v.TxCpf, v.TxTelefone, v.TxEmail, v.DtAdmissao, v.FlIsenable);
+        return v is null ? null : new VendedorDto(v.Id, v.TxNome, v.TxCpf, v.TxTelefone, v.TxEmail, v.DtAdmissao ?? DateTime.MinValue, v.FlIsenable);
     }
 
     public async Task<VendedorDto> CreateAsync(VendedorCreateDto dto)
     {
-        var entity = new Vendedor { TxNome = dto.TxNome, TxCpf = dto.TxCpf, TxTelefone = dto.TxTelefone, TxEmail = dto.TxEmail, DtAdmissao = dto.DtAdmissao };
+        var entity = new Vendedor {Id = dto.id, TxNome = dto.TxNome, TxCpf = dto.TxCpf, TxTelefone = dto.TxTelefone, TxEmail = dto.TxEmail, DtAdmissao = dto.DtAdmissao };
         var v = await repo.AddAsync(entity);
-        return new VendedorDto(v.Id, v.TxNome, v.TxCpf, v.TxTelefone, v.TxEmail, v.DtAdmissao, v.FlIsenable);
+        return new VendedorDto(v.Id, v.TxNome, v.TxCpf, v.TxTelefone, v.TxEmail, v.DtAdmissao ?? DateTime.MinValue, v.FlIsenable);
     }
 
     public async Task UpdateAsync(long id, VendedorCreateDto dto)
@@ -96,12 +96,12 @@ public class FornecedorService(IFornecedorRepository repo) : IService<Fornecedor
 public class ProdutoService(IProdutoRepository repo) : IService<ProdutoDto, ProdutoCreateDto>
 {
     public async Task<IEnumerable<ProdutoDto>> GetAllAsync() =>
-        (await repo.GetAllAsync()).Select(p => new ProdutoDto(p.Id, p.TxDescricao, p.TxUnidade, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable));
+        (await repo.GetAllAsync()).Select(p => new ProdutoDto(p.Id, p.TxDescricao ?? string.Empty, p.TxUnidade ?? string.Empty, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable));
 
     public async Task<ProdutoDto?> GetByIdAsync(long id)
     {
         var p = await repo.GetByIdAsync(id);
-        return p is null ? null : new ProdutoDto(p.Id, p.TxDescricao, p.TxUnidade, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable);
+        return p is null ? null : new ProdutoDto(p.Id, p.TxDescricao ?? string.Empty, p.TxUnidade ?? string.Empty, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable);
     }
 
     public async Task<ProdutoDto> CreateAsync(ProdutoCreateDto dto)

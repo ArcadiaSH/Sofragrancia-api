@@ -3,8 +3,8 @@ namespace Sofragrancia_api.Application.DTOs;
 public record ClienteDto(long Id, string TxRazaosocial, string TxNomefantasia, string TxCnpj, string TxTelefone, string TxEmail, string TxEndereco, string TxCidade, string TxEstado, bool? FlIsenable);
 public record ClienteCreateDto(string TxRazaosocial, string TxNomefantasia, string TxCnpj, string TxTelefone, string TxEmail, string TxEndereco, string TxCidade, string TxEstado);
 
-public record VendedorDto(long Id, string TxNome, string TxCpf, string TxTelefone, string TxEmail, DateTime DtAdmissao, bool? FlIsenable);
-public record VendedorCreateDto(string TxNome, string TxCpf, string TxTelefone, string TxEmail, DateTime DtAdmissao);
+public record VendedorDto(long Id, string TxNome, string TxCpf, string TxTelefone, string TxEmail, DateTime? DtAdmissao, bool? FlIsenable);
+public record VendedorCreateDto(long id, string TxNome, string TxCpf, string TxTelefone, string TxEmail, DateTime? DtAdmissao);
 
 public record FornecedorDto(long Id, string TxCod, string TxRazaosocial, string TxNomefantasia, string TxCnpj, string TxTelefone, string TxEmail, string TxEndereco, string TxCidade, string TxEstado, bool? FlIsenable);
 public record FornecedorCreateDto(string TxCod, string TxRazaosocial, string TxNomefantasia, string TxCnpj, string TxTelefone, string TxEmail, string TxEndereco, string TxCidade, string TxEstado);
