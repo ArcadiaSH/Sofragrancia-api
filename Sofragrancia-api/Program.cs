@@ -43,6 +43,8 @@ builder.Services.AddScoped<IItemPedidoRepository, ItemPedidoRepository>();
 builder.Services.AddScoped<IReposicaoRepository, ReposicaoRepository>();
 
 // Services
+builder.Services.AddScoped<IReposicaoBusinessRule, ReposicaoBusinessRule>();
+builder.Services.AddScoped<IItemPedidoBusinessRule, ItemPedidoBusinessRule>();
 builder.Services.AddScoped<IService<ClienteDto, ClienteCreateDto>, ClienteService>();
 builder.Services.AddScoped<IService<VendedorDto, VendedorCreateDto>, VendedorService>();
 builder.Services.AddScoped<IService<FornecedorDto, FornecedorCreateDto>, FornecedorService>();

@@ -135,6 +135,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.NrPrecounitario).HasColumnName("nr_precounitario").HasMaxLength(255).IsRequired(false);
             e.Property(x => x.NrDescontounitario).HasColumnName("nr_descontounitario");
             e.Property(x => x.Subtotal).HasColumnName("subtotal");
+            e.Property(x => x.Tipo).HasColumnName("tipo").HasColumnType("varchar(255)").HasMaxLength(255);
             e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
             e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
             e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);

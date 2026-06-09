@@ -21,8 +21,19 @@ public abstract class BaseController<TDto, TCreateDto>(IService<TDto, TCreateDto
     [HttpPost]
     public async Task<ActionResult<TDto>> Create([FromBody] TCreateDto dto)
     {
-        var result = await service.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { id = 0 }, result);
+        try
+        {
+            var result = await service.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = 0 }, result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
     }
 
     [HttpPut("{id}")]

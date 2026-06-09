@@ -8,6 +8,7 @@ public class Reposicao : BaseEntity
     public string NrPrecounitario { get; set; } = string.Empty;
     public decimal NrDescontounitario { get; set; }
     public decimal Subtotal { get; set; }
+    public string Tipo { get; set; } = string.Empty;
 
     public Produto Produto { get; set; } = null!;
     public Fornecedor Fornecedor { get; set; } = null!;

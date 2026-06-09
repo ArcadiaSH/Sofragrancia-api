@@ -151,7 +151,7 @@ public class PedidoService(IPedidoRepository repo) : IService<PedidoDto, PedidoC
     public async Task DeleteAsync(long id) => await repo.DeleteAsync(id);
 }
 
-public class ItemPedidoService(IItemPedidoRepository repo) : IService<ItemPedidoDto, ItemPedidoCreateDto>
+public class ItemPedidoService(IItemPedidoRepository repo, IItemPedidoBusinessRule itemPedidoBusinessRule) : IService<ItemPedidoDto, ItemPedidoCreateDto>
 {
     public async Task<IEnumerable<ItemPedidoDto>> GetAllAsync() =>
         (await repo.GetAllAsync()).Select(i => new ItemPedidoDto(i.Id, i.PedidoId, i.ProdutoId, i.NrQuantidade, i.NrPrecounitario, i.NrDescontounitario, i.NrSubtotal, i.FlIsenable));
@@ -164,6 +164,7 @@ public class ItemPedidoService(IItemPedidoRepository repo) : IService<ItemPedido
 
     public async Task<ItemPedidoDto> CreateAsync(ItemPedidoCreateDto dto)
     {
+        await itemPedidoBusinessRule.ValidarEAtualizarEstoqueAsync(dto.ProdutoId, dto.NrQuantidade);
         var entity = new ItemPedido { PedidoId = dto.PedidoId, PedidoClienteId = dto.PedidoClienteId, PedidoVendedorId = dto.PedidoVendedorId, ProdutoId = dto.ProdutoId, NrQuantidade = dto.NrQuantidade, NrPrecounitario = dto.NrPrecounitario, NrDescontounitario = dto.NrDescontounitario, NrSubtotal = dto.NrSubtotal };
         var i = await repo.AddAsync(entity);
         return new ItemPedidoDto(i.Id, i.PedidoId, i.ProdutoId, i.NrQuantidade, i.NrPrecounitario, i.NrDescontounitario, i.NrSubtotal, i.FlIsenable);
@@ -180,29 +181,30 @@ public class ItemPedidoService(IItemPedidoRepository repo) : IService<ItemPedido
     public async Task DeleteAsync(long id) => await repo.DeleteAsync(id);
 }
 
-public class ReposicaoService(IReposicaoRepository repo) : IService<ReposicaoDto, ReposicaoCreateDto>
+public class ReposicaoService(IReposicaoRepository repo, IReposicaoBusinessRule reposicaoBusinessRule) : IService<ReposicaoDto, ReposicaoCreateDto>
 {
     public async Task<IEnumerable<ReposicaoDto>> GetAllAsync() =>
-        (await repo.GetAllAsync()).Select(r => new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.FlIsenable));
+        (await repo.GetAllAsync()).Select(r => new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable));
 
     public async Task<ReposicaoDto?> GetByIdAsync(long id)
     {
         var r = await repo.GetByIdAsync(id);
-        return r is null ? null : new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.FlIsenable);
+        return r is null ? null : new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable);
     }
 
     public async Task<ReposicaoDto> CreateAsync(ReposicaoCreateDto dto)
     {
-        var entity = new Reposicao { ProdutoId = dto.ProdutoId, FornecedorId = dto.FornecedorId, NrQuantidade = dto.NrQuantidade, NrPrecounitario = dto.NrPrecounitario, NrDescontounitario = dto.NrDescontounitario, Subtotal = dto.Subtotal };
+        var entity = new Reposicao { ProdutoId = dto.ProdutoId, FornecedorId = dto.FornecedorId, NrQuantidade = dto.NrQuantidade, NrPrecounitario = dto.NrPrecounitario, NrDescontounitario = dto.NrDescontounitario, Subtotal = dto.Subtotal, Tipo = dto.Tipo };
         var r = await repo.AddAsync(entity);
-        return new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.FlIsenable);
+        await reposicaoBusinessRule.AtualizarEstoqueProdutoAsync(r.ProdutoId, r.NrQuantidade);
+        return new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable);
     }
 
     public async Task UpdateAsync(long id, ReposicaoCreateDto dto)
     {
         var r = await repo.GetByIdAsync(id) ?? throw new KeyNotFoundException();
         r.ProdutoId = dto.ProdutoId; r.FornecedorId = dto.FornecedorId; r.NrQuantidade = dto.NrQuantidade;
-        r.NrPrecounitario = dto.NrPrecounitario; r.NrDescontounitario = dto.NrDescontounitario; r.Subtotal = dto.Subtotal; r.DtUpdatedate = DateTime.UtcNow;
+        r.NrPrecounitario = dto.NrPrecounitario; r.NrDescontounitario = dto.NrDescontounitario; r.Subtotal = dto.Subtotal; r.Tipo = dto.Tipo; r.DtUpdatedate = DateTime.UtcNow;
         await repo.UpdateAsync(r);
     }
 

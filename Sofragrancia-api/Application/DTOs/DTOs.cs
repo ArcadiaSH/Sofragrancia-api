@@ -18,5 +18,5 @@ public record PedidoCreateDto(long ClienteId, long VendedorId, string NrPedido, 
 public record ItemPedidoDto(long Id, long PedidoId, long ProdutoId, int NrQuantidade, decimal NrPrecounitario, decimal NrDescontounitario, decimal NrSubtotal, bool? FlIsenable);
 public record ItemPedidoCreateDto(long PedidoId, long PedidoClienteId, long PedidoVendedorId, long ProdutoId, int NrQuantidade, decimal NrPrecounitario, decimal NrDescontounitario, decimal NrSubtotal);
 
-public record ReposicaoDto(long Id, long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal, bool? FlIsenable);
-public record ReposicaoCreateDto(long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal);
+public record ReposicaoDto(long Id, long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal, string Tipo, bool? FlIsenable);
+public record ReposicaoCreateDto(long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal, string Tipo);
