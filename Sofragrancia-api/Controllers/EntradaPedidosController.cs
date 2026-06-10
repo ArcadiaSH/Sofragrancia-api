@@ -25,4 +25,22 @@ public class EntradaPedidosController(IEntradaPedidoService service) : Controlle
             return NotFound(new { message = ex.Message });
         }
     }
+
+    [HttpPost("cancelar/{codigoPedido}")]
+    public async Task<ActionResult<CancelamentoPedidoDto>> Cancelar(string codigoPedido)
+    {
+        try
+        {
+            var result = await service.CancelarAsync(codigoPedido);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
 }

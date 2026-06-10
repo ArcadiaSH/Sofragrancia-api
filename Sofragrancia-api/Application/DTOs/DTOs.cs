@@ -22,5 +22,7 @@ public record ReposicaoDto(long Id, long ProdutoId, long FornecedorId, int NrQua
 public record ReposicaoCreateDto(long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal, string Tipo);
 
 public record EntradaPedidoItemCreateDto(long ProdutoId, int NrQuantidade, decimal NrPrecounitario, decimal NrDescontounitario, decimal NrSubtotal);
-public record EntradaPedidoCreateDto(long ClienteId, long VendedorId, string NrPedido, DateTime DtDatapedido, decimal NrValorbruto, decimal NrValordesconto, decimal NrValorliquido, IEnumerable<EntradaPedidoItemCreateDto> ItensPedido);
+public record EntradaPedidoClienteCreateDto(long Id, string TxRazaosocial, string TxNomefantasia, string TxCnpj, string TxTelefone, string TxEmail, string TxEndereco, string TxCidade, string TxEstado);
+public record EntradaPedidoCreateDto(EntradaPedidoClienteCreateDto Cliente, long VendedorId, string NrPedido, DateTime DtDatapedido, decimal NrValorbruto, decimal NrValordesconto, decimal NrValorliquido, IEnumerable<EntradaPedidoItemCreateDto> ItensPedido);
 public record EntradaPedidoDto(PedidoDto Pedido, IEnumerable<ItemPedidoDto> ItensPedido);
+public record CancelamentoPedidoDto(string NrPedido, int ItensProcessados, string Mensagem);

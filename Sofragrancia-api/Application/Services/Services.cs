@@ -194,7 +194,7 @@ public class ReposicaoService(IReposicaoRepository repo, IReposicaoBusinessRule 
 
     public async Task<ReposicaoDto> CreateAsync(ReposicaoCreateDto dto)
     {
-        var entity = new Reposicao { ProdutoId = dto.ProdutoId, FornecedorId = dto.FornecedorId, NrQuantidade = dto.NrQuantidade, NrPrecounitario = dto.NrPrecounitario, NrDescontounitario = dto.NrDescontounitario, Subtotal = dto.Subtotal, Tipo = dto.Tipo };
+        var entity = new Reposicao { ProdutoId = dto.ProdutoId, FornecedorId = dto.FornecedorId, NrQuantidade = dto.NrQuantidade, NrPrecounitario = dto.NrPrecounitario, NrDescontounitario = dto.NrDescontounitario, Subtotal = dto.Subtotal, Tipo = "Manual" };
         var r = await repo.AddAsync(entity);
         await reposicaoBusinessRule.AtualizarEstoqueProdutoAsync(r.ProdutoId, r.NrQuantidade);
         return new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable);

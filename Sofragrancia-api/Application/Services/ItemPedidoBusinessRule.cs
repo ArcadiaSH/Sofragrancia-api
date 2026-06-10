@@ -24,13 +24,12 @@ public class ItemPedidoBusinessRule(
             throw new InvalidOperationException($"Estoque insuficiente para \"{descricaoProduto}\". Disponível: {produto.NrEstoqueatual} unidade(s).");
 
         produto.NrEstoqueatual -= quantidade;
-        await produtoRepository.UpdateAsync(produto);
 
-        if (produto.NrEstoqueatual < produto.NrEstoqueminimo)
+        if (produto.NrEstoqueatual <= produto.NrEstoqueminimo)
         {
             var fornecedorId = await ObterFornecedorParaReposicaoAsync(produtoId);
 
-            var reposicaoManual = new Reposicao
+            var reposicaoAutomatica = new Reposicao
             {
                 ProdutoId = produtoId,
                 FornecedorId = fornecedorId,
@@ -38,11 +37,14 @@ public class ItemPedidoBusinessRule(
                 NrPrecounitario = "0",
                 NrDescontounitario = 0,
                 Subtotal = 0,
-                Tipo = "Manual"
+                Tipo = "automatica"
             };
 
-            await reposicaoRepository.AddAsync(reposicaoManual);
+            await reposicaoRepository.AddAsync(reposicaoAutomatica);
+            produto.NrEstoqueatual += reposicaoAutomatica.NrQuantidade;
         }
+
+        await produtoRepository.UpdateAsync(produto);
     }
 
     private async Task<long> ObterFornecedorParaReposicaoAsync(long produtoId)
