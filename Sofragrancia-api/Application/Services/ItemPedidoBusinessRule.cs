@@ -11,10 +11,16 @@ public class ItemPedidoBusinessRule(
 {
     public async Task ValidarEAtualizarEstoqueAsync(long produtoId, int quantidade)
     {
+        if (quantidade <= 0)
+            throw new InvalidOperationException("Quantidade do item pedido deve ser maior que zero.");
+
         var produto = await produtoRepository.GetByIdAsync(produtoId) ?? throw new KeyNotFoundException("Produto não encontrado.");
 
+        if (produto.NrEstoqueatual <= 0)
+            throw new InvalidOperationException("Produto sem estoque disponível para realizar o pedido.");
+
         if (quantidade > produto.NrEstoqueatual)
-            throw new InvalidOperationException("Quantidade solicitada maior que o estoque atual do produto.");
+            throw new InvalidOperationException($"Estoque insuficiente para o produto {produtoId}. Estoque atual: {produto.NrEstoqueatual}, quantidade solicitada: {quantidade}.");
 
         produto.NrEstoqueatual -= quantidade;
         await produtoRepository.UpdateAsync(produto);

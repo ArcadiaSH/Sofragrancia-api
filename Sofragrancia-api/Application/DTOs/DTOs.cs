@@ -20,3 +20,7 @@ public record ItemPedidoCreateDto(long PedidoId, long PedidoClienteId, long Pedi
 
 public record ReposicaoDto(long Id, long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal, string Tipo, bool? FlIsenable);
 public record ReposicaoCreateDto(long ProdutoId, long FornecedorId, int NrQuantidade, string NrPrecounitario, decimal NrDescontounitario, decimal Subtotal, string Tipo);
+
+public record EntradaPedidoItemCreateDto(long ProdutoId, int NrQuantidade, decimal NrPrecounitario, decimal NrDescontounitario, decimal NrSubtotal);
+public record EntradaPedidoCreateDto(long ClienteId, long VendedorId, string NrPedido, DateTime DtDatapedido, decimal NrValorbruto, decimal NrValordesconto, decimal NrValorliquido, IEnumerable<EntradaPedidoItemCreateDto> ItensPedido);
+public record EntradaPedidoDto(PedidoDto Pedido, IEnumerable<ItemPedidoDto> ItensPedido);
