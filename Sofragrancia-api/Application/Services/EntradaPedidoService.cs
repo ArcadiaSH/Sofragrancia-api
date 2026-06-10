@@ -59,11 +59,11 @@ public class EntradaPedidoService(
                 }
                 catch (KeyNotFoundException ex)
                 {
-                    throw new KeyNotFoundException($"Item {indiceItem} (ProdutoId: {itemDto.ProdutoId}) inválido: {ex.Message}");
+                    throw new KeyNotFoundException($"Não foi possível processar o item {indiceItem}: {ex.Message}");
                 }
                 catch (InvalidOperationException ex)
                 {
-                    throw new InvalidOperationException($"Item {indiceItem} (ProdutoId: {itemDto.ProdutoId}) não pôde ser inserido: {ex.Message}");
+                    throw new InvalidOperationException($"Não foi possível processar o item {indiceItem}: {ex.Message}");
                 }
             }
 

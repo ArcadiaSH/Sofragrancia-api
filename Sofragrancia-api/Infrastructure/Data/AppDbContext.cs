@@ -74,7 +74,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.ToTable("Produto");
             e.HasKey(x => x.Id);
             e.Property(x => x.Id).HasColumnName("id");
-            e.Property(x => x.TxDescricao).HasColumnName("tx_descri\u00e7\u00e3o").HasMaxLength(255);
+            e.Property(x => x.TxDescricao).HasColumnName("tx_descricao").HasMaxLength(255);
             e.Property(x => x.TxUnidade).HasColumnName("tx_unidade").HasMaxLength(255);
             e.Property(x => x.NrPrecocusto).HasColumnName("nr_precocusto").HasColumnType("decimal(12,2)");
             e.Property(x => x.NrPrecovenda).HasColumnName("nr_precovenda").HasColumnType("decimal(12,2)");
