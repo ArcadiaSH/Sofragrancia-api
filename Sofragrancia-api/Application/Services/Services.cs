@@ -96,25 +96,25 @@ public class FornecedorService(IFornecedorRepository repo) : IService<Fornecedor
 public class ProdutoService(IProdutoRepository repo) : IService<ProdutoDto, ProdutoCreateDto>
 {
     public async Task<IEnumerable<ProdutoDto>> GetAllAsync() =>
-        (await repo.GetAllAsync()).Select(p => new ProdutoDto(p.Id, p.TxDescricao ?? string.Empty, p.TxUnidade ?? string.Empty, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable));
+        (await repo.GetAllAsync()).Select(p => new ProdutoDto(p.Id, p.TxDescricao ?? string.Empty, p.TxUnidade ?? string.Empty, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable, p.URL));
 
     public async Task<ProdutoDto?> GetByIdAsync(long id)
     {
         var p = await repo.GetByIdAsync(id);
-        return p is null ? null : new ProdutoDto(p.Id, p.TxDescricao ?? string.Empty, p.TxUnidade ?? string.Empty, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable);
+        return p is null ? null : new ProdutoDto(p.Id, p.TxDescricao ?? string.Empty, p.TxUnidade ?? string.Empty, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable, p.URL);
     }
 
     public async Task<ProdutoDto> CreateAsync(ProdutoCreateDto dto)
     {
-        var entity = new Produto { TxDescricao = dto.TxDescricao, TxUnidade = dto.TxUnidade, NrPrecocusto = dto.NrPrecocusto, NrPrecovenda = dto.NrPrecovenda, NrEstoqueatual = dto.NrEstoqueatual, NrEstoqueminimo = dto.NrEstoqueminimo };
+        var entity = new Produto { TxDescricao = dto.TxDescricao, TxUnidade = dto.TxUnidade, NrPrecocusto = dto.NrPrecocusto, NrPrecovenda = dto.NrPrecovenda, NrEstoqueatual = dto.NrEstoqueatual, NrEstoqueminimo = dto.NrEstoqueminimo, URL = dto.URL };
         var p = await repo.AddAsync(entity);
-        return new ProdutoDto(p.Id, p.TxDescricao, p.TxUnidade, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable);
+        return new ProdutoDto(p.Id, p.TxDescricao, p.TxUnidade, p.NrPrecocusto, p.NrPrecovenda, p.NrEstoqueatual, p.NrEstoqueminimo, p.FlIsenable, p.URL);
     }
 
     public async Task UpdateAsync(long id, ProdutoCreateDto dto)
     {
         var p = await repo.GetByIdAsync(id) ?? throw new KeyNotFoundException();
-        p.TxDescricao = dto.TxDescricao; p.TxUnidade = dto.TxUnidade; p.NrPrecocusto = dto.NrPrecocusto;
+        p.TxDescricao = dto.TxDescricao; p.TxUnidade = dto.TxUnidade; p.NrPrecocusto = dto.NrPrecocusto; p.URL = dto.URL ;
         p.NrPrecovenda = dto.NrPrecovenda; p.NrEstoqueatual = dto.NrEstoqueatual; p.NrEstoqueminimo = dto.NrEstoqueminimo; p.DtUpdatedate = DateTime.UtcNow;
         await repo.UpdateAsync(p);
     }
@@ -184,12 +184,12 @@ public class ItemPedidoService(IItemPedidoRepository repo, IItemPedidoBusinessRu
 public class ReposicaoService(IReposicaoRepository repo, IReposicaoBusinessRule reposicaoBusinessRule) : IService<ReposicaoDto, ReposicaoCreateDto>
 {
     public async Task<IEnumerable<ReposicaoDto>> GetAllAsync() =>
-        (await repo.GetAllAsync()).Select(r => new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable));
+        (await repo.GetAllAsync()).Select(r => new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable, r.DtCreatedate));
 
     public async Task<ReposicaoDto?> GetByIdAsync(long id)
     {
         var r = await repo.GetByIdAsync(id);
-        return r is null ? null : new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable);
+        return r is null ? null : new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable, r.DtCreatedate);
     }
 
     public async Task<ReposicaoDto> CreateAsync(ReposicaoCreateDto dto)
@@ -197,7 +197,7 @@ public class ReposicaoService(IReposicaoRepository repo, IReposicaoBusinessRule 
         var entity = new Reposicao { ProdutoId = dto.ProdutoId, FornecedorId = dto.FornecedorId, NrQuantidade = dto.NrQuantidade, NrPrecounitario = dto.NrPrecounitario, NrDescontounitario = dto.NrDescontounitario, Subtotal = dto.Subtotal, Tipo = "Manual" };
         var r = await repo.AddAsync(entity);
         await reposicaoBusinessRule.AtualizarEstoqueProdutoAsync(r.ProdutoId, r.NrQuantidade);
-        return new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable);
+        return new ReposicaoDto(r.Id, r.ProdutoId, r.FornecedorId, r.NrQuantidade, r.NrPrecounitario, r.NrDescontounitario, r.Subtotal, r.Tipo, r.FlIsenable, r.DtCreatedate);
     }
 
     public async Task UpdateAsync(long id, ReposicaoCreateDto dto)

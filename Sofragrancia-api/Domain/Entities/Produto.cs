@@ -4,6 +4,7 @@ public class Produto : BaseEntity
 {
     public string? TxDescricao { get; set; }
     public string? TxUnidade { get; set; }
+    public string? URL { get; set; }
     public decimal NrPrecocusto { get; set; }
     public decimal NrPrecovenda { get; set; }
     public int NrEstoqueatual { get; set; }

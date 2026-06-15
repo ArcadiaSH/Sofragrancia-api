@@ -36,7 +36,7 @@ public class ItemPedidoBusinessRule(
                 NrQuantidade = produto.NrEstoqueminimo,
                 NrPrecounitario = "0",
                 NrDescontounitario = 0,
-                Subtotal = 0,
+                Subtotal = produto.NrPrecocusto * produto.NrEstoqueminimo,
                 Tipo = "automatica"
             };
 

@@ -83,6 +83,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.DtCreatedate).HasColumnName("dt_createdate").IsRequired(false);
             e.Property(x => x.DtUpdatedate).HasColumnName("dt_updatedate").IsRequired(false);
             e.Property(x => x.FlIsenable).HasColumnName("fl_isenable").IsRequired(false);
+            e.Property(x => x.URL).HasColumnName("URL").HasMaxLength(255).IsRequired(false);
         });
 
         modelBuilder.Entity<Pedido>(e =>
